@@ -1,46 +1,97 @@
 'use client'
 import { useState } from 'react'
+import { LayoutGrid, Calendar, Palette, Plus, ChevronRight, Image as ImageIcon } from 'lucide-react'
 
 export default function AdminPage() {
-  const [activeTab, setActiveTab] = useState('games')
+  const [activeTab, setActiveTab] = useState('design')
 
   return (
-    <div className="p-5 pb-20">
-      <h1 className="text-3xl font-black mb-6 tracking-tight">Адмінка</h1>
-
-      {/* Навігація */}
-      <div className="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-        <button onClick={() => setActiveTab('games')} className={`px-5 py-2.5 rounded-full font-semibold text-sm whitespace-nowrap transition-colors ${activeTab === 'games' ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-gray-100 dark:bg-gray-800'}`}>Каталог</button>
-        <button onClick={() => setActiveTab('events')} className={`px-5 py-2.5 rounded-full font-semibold text-sm whitespace-nowrap transition-colors ${activeTab === 'events' ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-gray-100 dark:bg-gray-800'}`}>Ігросесії</button>
-        <button onClick={() => setActiveTab('design')} className={`px-5 py-2.5 rounded-full font-semibold text-sm whitespace-nowrap transition-colors ${activeTab === 'design' ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-gray-100 dark:bg-gray-800'}`}>Візуал</button>
+    <div className="min-h-screen bg-black text-white p-6 max-w-lg mx-auto font-sans">
+      {/* Лого та Профіль */}
+      <div className="flex justify-between items-center mb-12 mt-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+            <span className="font-black text-xl">N</span>
+          </div>
+          <div>
+            <h1 className="text-lg font-bold leading-none">Nedushni</h1>
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-widest mt-1">Admin Console</p>
+          </div>
+        </div>
       </div>
 
-      {/* Каталог */}
-      {activeTab === 'games' && (
-        <div className="space-y-5">
-          <h2 className="text-xl font-bold">Нова гра</h2>
-          <input type="text" placeholder="Назва гри" className="w-full p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl outline-none" />
-          <div className="flex gap-4">
-            <input type="number" placeholder="Мін. гравців" className="w-1/2 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl outline-none" />
-            <input type="number" placeholder="Макс. гравців" className="w-1/2 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl outline-none" />
-          </div>
-          <input type="text" placeholder="URL обкладинки" className="w-full p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl outline-none" />
-          <button className="w-full bg-[var(--accent-color)] text-white p-4 rounded-2xl font-bold text-lg">Зберегти в базу</button>
-        </div>
-      )}
+      {/* Glass Navigation */}
+      <nav className="glass-card rounded-[28px] p-1.5 flex gap-1 mb-10">
+        {[
+          { id: 'games', icon: LayoutGrid, label: 'Ігри' },
+          { id: 'events', icon: Calendar, label: 'Івенти' },
+          { id: 'design', icon: Palette, label: 'Бренд' }
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex-1 flex items-center justify-center gap-2 py-3.5 rounded-[22px] transition-all duration-500 ${
+              activeTab === tab.id 
+              ? 'bg-white/10 text-white shadow-inner' 
+              : 'text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            <tab.icon size={18} />
+            <span className="text-sm font-bold">{tab.label}</span>
+          </button>
+        ))}
+      </nav>
 
-      {/* Візуал */}
-      {activeTab === 'design' && (
-        <div className="space-y-5">
-          <h2 className="text-xl font-bold">Налаштування бренду</h2>
-          <input type="text" placeholder="URL логотипу" className="w-full p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl outline-none" />
-          <div className="flex gap-3 items-center">
-            <input type="color" defaultValue="#ff4500" className="w-14 h-14 rounded-xl cursor-pointer p-0 border-0 bg-transparent" />
-            <input type="text" placeholder="#ff4500 (Акцентний колір)" className="flex-1 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl outline-none" />
-          </div>
-          <button className="w-full bg-black dark:bg-white text-white dark:text-black p-4 rounded-2xl font-bold text-lg">Оновити дизайн</button>
-        </div>
-      )}
+      {/* Content Area */}
+      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        
+        {activeTab === 'design' && (
+          <>
+            <section className="space-y-6">
+              <div className="flex items-center gap-2 px-2">
+                <Palette size={20} className="text-blue-500" />
+                <h2 className="text-xl font-bold">Стиль інтерфейсу</h2>
+              </div>
+              
+              <div className="glass-card rounded-4xl p-8 space-y-8">
+                <div>
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3 block">Акцентний колір</label>
+                  <div className="flex items-center gap-4 bg-white/5 p-3 rounded-3xl border border-white/5">
+                    <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg border-2 border-white/10">
+                      <input type="color" defaultValue="#3b82f6" className="w-[200%] h-[200%] -translate-x-1/4 -translate-y-1/4 cursor-pointer" />
+                    </div>
+                    <input type="text" placeholder="#3B82F6" className="bg-transparent flex-1 outline-none font-mono text-lg font-medium" />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3 block">Шрифт заголовків</label>
+                  <div className="relative">
+                    <select className="w-full input-glass p-5 rounded-3xl outline-none appearance-none font-bold text-lg">
+                      <option>Unbounded</option>
+                      <option>Inter Tight</option>
+                      <option>Montserrat</option>
+                    </select>
+                    <ChevronRight className="absolute right-5 top-6 rotate-90 opacity-30" />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <button className="w-full py-6 bg-blue-600 rounded-4xl font-black text-lg shadow-2xl shadow-blue-600/30 active:scale-95 transition-all duration-300">
+              ЗБЕРЕГТИ ЗМІНИ
+            </button>
+          </>
+        )}
+
+        {activeTab === 'games' && (
+           <div className="glass-card rounded-4xl p-8 flex flex-col items-center py-16">
+              <Plus size={48} className="text-gray-700 mb-4" />
+              <p className="text-gray-500 font-bold">Додати першу гру в базу</p>
+           </div>
+        )}
+
+      </div>
     </div>
   )
 }
