@@ -44,14 +44,21 @@ export default function AdminPage() {
   }
 
   // 2. Логіка збереження всього бренду
-  const saveBrand = async () => {
+ const saveBrand = async () => {
     setLoading(true)
-    const { error } = await supabase.from('settings').upsert({ key: 'theme', value: config })
-    setLoading(false)
+    const { error } = await supabase
+      .from('settings')
+      .upsert({ key: 'theme', value: config })
+    
     if (!error) {
-      setStatus('Брендбук збережено!')
-      setTimeout(() => setStatus(''), 3000)
+      setStatus('ЗБЕРЕЖЕНО!')
+      // Щоб ти відразу побачив зміни шрифтів та кольорів
+      setTimeout(() => window.location.reload(), 1000)
+    } else {
+      console.error(error)
+      setStatus('ПОМИЛКА БАЗИ')
     }
+    setLoading(false)
   }
 
   return (
