@@ -1,22 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Unbounded:wght@700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg-color: #ffffff;
-  --primary-color: #000000;
-  --accent-color: #ff4500;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #1c1c1e;
-    --primary-color: #ffffff;
-    --accent-color: #ff4500;
-  }
+  --bg-color: #000000;
+  --accent-color: #3b82f6; /* Можна буде міняти в адмінці */
+  --text-main: #ffffff;
 }
 
 body {
   background-color: var(--bg-color);
-  color: var(--primary-color);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2 {
+  font-family: 'Unbounded', sans-serif;
+  letter-spacing: -0.05em;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.input-glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.input-glass:focus {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
 }
